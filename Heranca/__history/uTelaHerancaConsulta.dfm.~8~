@@ -1,0 +1,144 @@
+object frmTelaHenrancaConsulta: TfrmTelaHenrancaConsulta
+  Left = 0
+  Top = 0
+  Anchors = []
+  BorderStyle = bsDialog
+  Caption = 'Titulo'
+  ClientHeight = 229
+  ClientWidth = 454
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnlSuperior: TPanel
+    Left = 0
+    Top = 0
+    Width = 454
+    Height = 41
+    Align = alTop
+    TabOrder = 0
+    ExplicitLeft = 200
+    ExplicitTop = 41
+    ExplicitWidth = 185
+    DesignSize = (
+      454
+      41)
+    object lblIndice: TLabel
+      Left = 16
+      Top = 0
+      Width = 39
+      Height = 13
+      Caption = 'lblIndice'
+    end
+    object mskPesquisa: TMaskEdit
+      Left = 4
+      Top = 14
+      Width = 432
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 0
+      Text = ''
+      TextHint = 'Digite sua Pesquisa Aqui'
+      ExplicitWidth = 441
+    end
+  end
+  object pnlGrid: TPanel
+    Left = 0
+    Top = 41
+    Width = 454
+    Height = 147
+    Align = alClient
+    Anchors = [akTop, akRight, akBottom]
+    TabOrder = 1
+    ExplicitLeft = 200
+    ExplicitTop = 88
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object grdPesquisa: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 452
+      Height = 145
+      Align = alClient
+      DataSource = dtsPesquisa
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      OnKeyDown = grdPesquisaKeyDown
+    end
+  end
+  object pnlInferior: TPanel
+    Left = 0
+    Top = 188
+    Width = 454
+    Height = 41
+    Align = alBottom
+    TabOrder = 2
+    ExplicitLeft = 280
+    ExplicitTop = 168
+    ExplicitWidth = 185
+    DesignSize = (
+      454
+      41)
+    object btnFechar: TBitBtn
+      Left = 369
+      Top = 6
+      Width = 77
+      Height = 27
+      Anchors = [akTop, akRight]
+      Caption = '&Fechar'
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFA6A5A5A7A7A79F9E9E9F9E9EA7A6A6A6A5A5FF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF9F9E9EAAA7A7CCC9C9CAC5C5C0
+        BBBBBAB4B4B4ACACAAA3A3A09E9E9F9E9EFF00FFFF00FFFF00FFFF00FFFF00FF
+        959393D3D1D1CCCAD56765AB3534B05050CE4F4FC53737B66B68A5AFA9A9A49E
+        9E959393FF00FFFF00FFFF00FFA09F9FE9E9E9A9A5C71818B54040E77A7AF393
+        93F69696F67A7AF43B3BEA1C1AAF9C96A3A59F9F9F9E9EFF00FFFF00FFB8B7B7
+        D7D5DE1111AB2525CA27279E2F2FB27373F27474F23030B228289E2828CE1616
+        AAB4ADADA19F9FFF00FFBCBBBBE6E6E66362BA1616C63F3FAABBBBBB9797B723
+        23AA2424AA9797B7BBBBBB3B3BA51010C95957A5B1ABABBDBCBCB5B4B4DCDADA
+        0F0FAB1212A714149D9797B7B6B6B69C9CBB9C9CBBB6B6B69797B71313991212
+        AD1717A4BDB8B8B1B1B1A6A5A5C1C0C00808B10707930F0FA51010969A9ABBC0
+        C0C0C0C0C09A9ABB1111960F0FA70909970101A0C6C1C1A09F9FA6A5A5BDBCBC
+        5C5CCA4D4DCE2222BB101096B7B7D8E2E2E2E2E2E2B7B7D81111962626BC5353
+        D12E2EB8CECACAA09F9FA9A7A7CACACA5B5BBB6969D52323A3C1C1E3FEFEFEC1
+        C1E3C1C1E3FEFEFEC1C1E31F1F9E7272D8605FB1DCD8D8A7A7A7A5A5A5C9C9C9
+        7978B58A8ADE6565BBFEFEFEC1C1E32A2AAD2A2AADC1C1E3FEFEFE5D5DB68B8B
+        E06968A9DEDDDDA6A5A5FF00FFACACACB5B5C06A6AC26A6AC75E5EB65252C164
+        64D06464D04D4DBD5E5EB66D6DCA6767B7DDDCE7ACACACFF00FFFF00FF9F9E9E
+        C6C6C6B4B4BC7575C6A0A0E19393DA8B8BD88C8CD89797DCA1A1E17776BFABAA
+        CAE7E7E7A09F9FFF00FFFF00FFFF00FF979797C6C6C6C6C6CCA4A3CB9292D187
+        87CF8686CF8E8CD09A99CAD8D8DEE0E0E0979696FF00FFFF00FFFF00FFFF00FF
+        FF00FF9F9E9EB1B0B0C7C7C7CECECED5D4D4D7D7D7DADADADADADAB5B5B5A09F
+        9FFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFB1B0B0ACABABA0
+        9F9FA09F9FABAAAAB1B0B0FF00FFFF00FFFF00FFFF00FFFF00FF}
+      TabOrder = 0
+      OnClick = btnFecharClick
+      ExplicitLeft = 392
+    end
+  end
+  object dtsPesquisa: TDataSource
+    DataSet = QryPesquisa
+    Left = 393
+    Top = 72
+  end
+  object QryPesquisa: TFDQuery
+    Connection = dtmPrincipal.ConexaoDB
+    Left = 393
+    Top = 128
+  end
+end

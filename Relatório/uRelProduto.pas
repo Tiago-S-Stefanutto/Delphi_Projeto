@@ -1,0 +1,68 @@
+unit uRelProduto;
+
+interface
+
+uses
+Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Datasnap.DBClient, RLReport, RLFilters, RLPDFFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelProduto = class(TForm)
+    Relatorio: TRLReport;
+    RLBand1: TRLBand;
+    rlbRodaPe: TRLBand;
+    rlbTitulo: TRLBand;
+    rlbTronco: TRLBand;
+    QryProduto: TFDQuery;
+    dtsProduto: TDataSource;
+    RLPDFFilter1: TRLPDFFilter;
+    RLXLSXFilter1: TRLXLSXFilter;
+    RLXLSFilter1: TRLXLSFilter;
+    RLDraw1: TRLDraw;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
+    RLLabel1: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLLabel2: TRLLabel;
+    RLPanel1: TRLPanel;
+    RLDraw2: TRLDraw;
+    RLLabel3: TRLLabel;
+    RLLabel4: TRLLabel;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLDBText1: TRLDBText;
+    RLDBText2: TRLDBText;
+    RLDBText3: TRLDBText;
+    RLDBText4: TRLDBText;
+    QryProdutoprodutoId: TFDAutoIncField;
+    QryProdutonome: TStringField;
+    QryProdutodescricao: TStringField;
+    QryProdutovalor: TFMTBCDField;
+    QryProdutoquantidade: TFMTBCDField;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelProduto: TfrmRelProduto;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  QryProduto.Close;
+end;
+
+procedure TfrmRelProduto.FormCreate(Sender: TObject);
+begin
+  QryProduto.Open;
+end;
+end.

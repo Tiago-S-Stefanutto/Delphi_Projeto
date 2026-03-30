@@ -1,0 +1,60 @@
+unit uFuncaoCriptografia;
+
+interface
+
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uTelaHeranca, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Mask, Vcl.ComCtrls, RxToolEdit, uEnum, uDTMConexao;
+
+function  Criptografar (const aEntrada:string): string;
+
+function  Descriptografar(const aEntrada:string) : string;
+
+implementation
+
+function  Criptografar (const aEntrada:string): string;
+var i, iQtdeEnt, iIntervalo:Integer;
+    sSaida:string;
+    sProximoCaracter :string;
+begin
+  iIntervalo:= 7;
+  i         := 0;
+  iQtdeEnt  := 0;
+
+  if (aEntrada <> EmptyStr) then begin
+    iQtdeEnt      := Length (aEntrada);
+    for i   := iQtdeEnt downto  1 do //Faz Loop contrário
+    begin
+      sProximoCaracter  :=Copy(aEntrada, i, 1);
+      sSaida  := sSaida + (Char(ord(sProximoCaracter[1])+iIntervalo));
+    end;
+  end;
+
+  Result := sSaida;
+end;
+
+function  Descriptografar(const aEntrada:string) : string;
+var i, iQtdeEnt, iIntervalo:Integer;
+    sSaida: string;
+    sProximoCaracter :string;
+begin
+  iIntervalo:= 7;
+  i         := 0;
+  iQtdeEnt  := 0;
+
+  if (aEntrada <> EmptyStr) then begin
+    iQtdeEnt      := Length (aEntrada);
+    for i   := iQtdeEnt downto  1 do //Faz Loop contrário
+    begin
+      sProximoCaracter  :=Copy(aEntrada, i, 1);
+      sSaida  := sSaida + (Char(ord(sProximoCaracter[1])-iIntervalo));
+    end;
+  end;
+
+  Result := sSaida;
+end;
+
+
+end.

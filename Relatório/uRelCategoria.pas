@@ -1,0 +1,63 @@
+unit uRelCategoria;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Datasnap.DBClient, RLReport, RLFilters, RLPDFFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelCategoria = class(TForm)
+    QryCategoria: TFDQuery;
+    dtsCategorias: TDataSource;
+    QryCategoriacategoriasId: TFDAutoIncField;
+    QryCategoriadescricao: TStringField;
+    Relatorio: TRLReport;
+    Cabecalho: TRLBand;
+    lblListagemDeCategorias: TRLLabel;
+    trldLinhaCabecalho: TRLDraw;
+    RLPDFFilter1: TRLPDFFilter;
+    RodaPe: TRLBand;
+    rldLinhaRodaPe: TRLDraw;
+    rlsFullDate: TRLSystemInfo;
+    rlsPagina: TRLSystemInfo;
+    rlsTotalPagina: TRLSystemInfo;
+    lblBarraPagina: TRLLabel;
+    lblPagina: TRLLabel;
+    dbtCategoriaId: TRLDBText;
+    rlbTronco: TRLBand;
+    rlbTitulo: TRLBand;
+    RLPanel1: TRLPanel;
+    lblCodigo: TRLLabel;
+    lblDescricao: TRLLabel;
+    RLXLSXFilter1: TRLXLSXFilter;
+    RLXLSFilter1: TRLXLSFilter;
+    dbtDescricao: TRLDBText;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCategoria: TfrmRelCategoria;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelCategoria.FormCreate(Sender: TObject);
+begin
+ QryCategoria.Open;
+end;
+
+procedure TfrmRelCategoria.FormDestroy(Sender: TObject);
+begin
+  QryCategoria.Close;
+end;
+
+end.

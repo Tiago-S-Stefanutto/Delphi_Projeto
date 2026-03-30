@@ -1,0 +1,111 @@
+object frmUsuarioVsAcoes: TfrmUsuarioVsAcoes
+  Left = 0
+  Top = 0
+  Caption = 'Usu'#225'rio Vs A'#231#245'es'
+  ClientHeight = 428
+  ClientWidth = 846
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 257
+    Top = 0
+    Height = 387
+    ExplicitLeft = 192
+    ExplicitTop = 128
+    ExplicitHeight = 100
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 257
+    Height = 387
+    Align = alLeft
+    TabOrder = 0
+    object DBGrid1: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 255
+      Height = 385
+      Align = alClient
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+    end
+  end
+  object Panel2: TPanel
+    Left = 260
+    Top = 0
+    Width = 586
+    Height = 387
+    Align = alClient
+    TabOrder = 1
+    ExplicitLeft = 240
+    ExplicitWidth = 650
+    object DBGrid2: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 584
+      Height = 385
+      Align = alClient
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+    end
+  end
+  object Panel3: TPanel
+    Left = 0
+    Top = 387
+    Width = 846
+    Height = 41
+    Align = alBottom
+    TabOrder = 2
+    ExplicitLeft = 8
+    ExplicitTop = 327
+    ExplicitWidth = 694
+  end
+  object dtsUsuarios: TDataSource
+    DataSet = QryUsuarios
+    Left = 68
+    Top = 232
+  end
+  object DataSource2: TDataSource
+    Left = 740
+    Top = 216
+  end
+  object QryUsuarios: TFDQuery
+    SQL.Strings = (
+      'SELECT ua.usuarioId,'
+      'ua.acaoAcessoId,'
+      'a.descricao,'
+      'ua.ativo'
+      'FROM usuariosAcaoAcesso AS ua'
+      'INNER JOIN acaoAcesso AS a ON a.acaoAcessoId = ua.acaoAcessoId'
+      'WHERE ua.usuarioId=:usuarioId')
+    Left = 80
+    Top = 168
+    ParamData = <
+      item
+        Name = 'USUARIOID'
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQuery2: TFDQuery
+    Left = 740
+    Top = 160
+  end
+end

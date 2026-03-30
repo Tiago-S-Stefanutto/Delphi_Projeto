@@ -1,0 +1,149 @@
+unit uTelaHerancaConsulta;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, uDTMConexao, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Mask, Vcl.Buttons;
+
+type
+  TfrmTelaHenrancaConsulta = class(TForm)
+    pnlSuperior: TPanel;
+    pnlGrid: TPanel;
+    pnlInferior: TPanel;
+    mskPesquisa: TMaskEdit;
+    lblIndice: TLabel;
+    grdPesquisa: TDBGrid;
+    dtsPesquisa: TDataSource;
+    QryPesquisa: TFDQuery;
+    btnFechar: TBitBtn;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnFecharClick(Sender: TObject);
+    procedure grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure grdPesquisaTitleClick(Column: TColumn);
+    procedure FormShow(Sender: TObject);
+    procedure grdPesquisaDblClick(Sender: TObject);
+    procedure mskPesquisaChange(Sender: TObject);
+  private
+    procedure ExibirLabelIndice(Campo: string; aLabel: TLabel);
+    function RetornarCampoTraduzido(Campo: string): string;
+    { Private declarations }
+  public
+    { Public declarations }
+    aRetornarIdSelecionado:Variant;
+    aIniciarPesquisaId:Variant;
+    aCampoId:string;
+    IndiceAtual:string;
+  end;
+
+var
+  frmTelaHenrancaConsulta: TfrmTelaHenrancaConsulta;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmTelaHenrancaConsulta.btnFecharClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TfrmTelaHenrancaConsulta.ExibirLabelIndice(Campo: string; aLabel: TLabel);
+begin
+  aLabel.Caption:=RetornarCampoTraduzido(Campo);
+end;
+
+procedure TfrmTelaHenrancaConsulta.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if QryPesquisa.Active then
+    QryPesquisa.Close;
+end;
+
+procedure TfrmTelaHenrancaConsulta.FormCreate(Sender: TObject);
+begin
+  if QryPesquisa.Active then
+    QryPesquisa.Close;
+    ExibirLabelIndice(IndiceAtual, lblIndice);
+    QryPesquisa.Open;
+end;
+
+
+procedure TfrmTelaHenrancaConsulta.FormShow(Sender: TObject);
+begin
+   if (aIniciarPesquisaId<>Unassigned) then
+   begin
+     QryPesquisa.Locate(aCampoId, aIniciarPesquisaId, [loPartialKey])
+   end;
+end;
+
+procedure TfrmTelaHenrancaConsulta.grdPesquisaDblClick(Sender: TObject);
+begin
+  aRetornarIdSelecionado  := QryPesquisa.FieldByName(aCampoId).AsVariant;
+  Close;
+end;
+
+procedure TfrmTelaHenrancaConsulta.grdPesquisaKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+//Bloqueia o ctrl del
+  if (Shift = [ssCtrl]) and (Key = 46) then
+    key:=0;
+end;
+
+procedure TfrmTelaHenrancaConsulta.grdPesquisaTitleClick(Column: TColumn);
+begin
+  IndiceAtual  :=Column.FieldName;
+  QryPesquisa.IndexFieldNames:=IndiceAtual;
+  ExibirLabelIndice(IndiceAtual, lblIndice);
+end;
+
+procedure TfrmTelaHenrancaConsulta.mskPesquisaChange(Sender: TObject);
+begin
+  var
+  Valor: string;
+  I: Integer;
+  TipoCampo: TFieldType;
+begin
+  Valor := TMaskEdit(Sender).Text;
+
+  // Se o campo estiver vazio, sai imediatamente
+  if Trim(Valor) = '' then
+    Exit;
+
+  if IndiceAtual = '' then
+    Exit;
+
+  TipoCampo := QryPesquisa.FieldByName(IndiceAtual).DataType;
+
+  // Validação para campos inteiros
+  if (TipoCampo in [ftInteger, ftSmallint, ftLargeint]) then
+  begin
+    // Tenta converter para inteiro, se falhar sai do método
+    if not TryStrToInt(Valor, I) then
+      Exit;
+
+    // Faz a busca pelo valor inteiro
+    QryPesquisa.Locate(IndiceAtual, I, []);
+  end
+  else
+  begin
+    // Para campos texto, busca parcial (qualquer correspondência)
+    QryPesquisa.Locate(IndiceAtual, Valor, [loPartialKey]);
+  end;
+end;
+end;
+
+function  TfrmTelaHenrancaConsulta.RetornarCampoTraduzido(Campo: string) :string;
+var i:integer;
+begin
+  for i := 0 to QryPesquisa.FieldCount -1 do begin
+    if LowerCase(QryPesquisa.Fields[i].FieldName) = LowerCase(Campo) then begin
+      Result:=QryPesquisa.Fields[i].DisplayLabel;
+      Break;
+    end;
+  end;
+end;
+
+end.

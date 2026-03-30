@@ -1,0 +1,128 @@
+object dtmPrincipal: TdtmPrincipal
+  OldCreateOrder = False
+  Height = 308
+  Width = 394
+  object ConexaoDB: TFDConnection
+    Params.Strings = (
+      'Server=DC-TR-02-VM\SERVERCURSO'
+      'Database=vendas'
+      'OSAuthent=Yes'
+      'DriverID=MSSQL'
+      'User_Name=DOMTEC\devmv'
+      'Connected=True')
+    Connected = True
+    Left = 24
+    Top = 112
+  end
+  object QryScriptCategoria: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'IF OBJECT_ID ('#39'categorias'#39') IS NULL '
+      'BEGIN'
+      #9'CREATE TABLE categorias('
+      #9'   categoriasId int IDENTITY(1,1) NOT NULL,'
+      #9'   descricao  varchar(30) NULL,'
+      #9'   PRIMARY KEY (categoriasId)'
+      ')'
+      'END')
+    Left = 88
+    Top = 48
+  end
+  object QryScriptClientes: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'IF OBJECT_ID ('#39'clientes'#39') IS NULL '
+      'BEGIN'
+      #9'CREATE TABLE clientes('
+      #9#9'clienteId int IDENTITY(1,1) NOT NULL,'
+      #9#9'nome varchar(60) NULL,'
+      #9#9'endereco varchar(60) null,'
+      #9#9'cidade varchar(50) null,'
+      #9#9'bairro varchar(40) null,'
+      #9#9'estado varchar(2) null,'
+      #9#9'cep varchar(10) null,'
+      #9#9'telefone varchar(14) null,  '
+      #9#9'email varchar(100) null,'
+      #9#9'dataNascimento datetime null'
+      #9#9'PRIMARY KEY (clienteId),'
+      #9')'
+      'END')
+    Left = 192
+    Top = 48
+  end
+  object QryScriptProdutos: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'IF OBJECT_ID ('#39'produtos'#39') IS NULL '
+      'BEGIN'
+      #9'CREATE TABLE produtos('
+      #9#9'produtoId int IDENTITY(1,1) NOT NULL,'
+      #9#9'nome varchar(60) NULL,'
+      #9#9'descricao varchar(255) null,'
+      #9#9'valor decimal(18,5) default 0.00000 null,'
+      #9#9'quantidade decimal(18,5) default 0.00000 null,'
+      #9#9'categoriasId int null,'
+      #9#9'PRIMARY KEY (produtoId),'
+      #9#9'CONSTRAINT FK_ProdutosCategorias '
+      #9#9'FOREIGN KEY (categoriasId) references categorias(categoriasId)'
+      #9')'
+      'END')
+    Left = 144
+    Top = 104
+  end
+  object QryScriptVendas: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'IF OBJECT_ID ('#39'vendas'#39') IS NULL '
+      'BEGIN'
+      #9'Create table vendas ('
+      #9'  vendaId int identity(1,1) not null,'
+      #9'  clienteId int not null,'
+      #9'  dataVenda datetime default getdate(),'
+      #9'  totalVenda decimal(18,5) default 0.00000,'
+      ''
+      ''
+      #9'  PRIMARY KEY (vendaId),'
+      #9'  CONSTRAINT FK_VendasClientes FOREIGN KEY (clienteId)'
+      #9#9'REFERENCES clientes(clienteId)'
+      #9')'
+      'END;')
+    Left = 248
+    Top = 104
+  end
+  object QryScriptItensVendas: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'IF OBJECT_ID ('#39'vendasItens'#39') IS NULL '
+      'BEGIN'
+      #9'Create table vendasItens ('
+      #9'  vendaId int not null,'
+      #9'  produtoId int not null,'
+      #9'  valorUnitario decimal (18,5) default 0.00000,'
+      #9'  quantidade decimal (18,5) default 0.00000,'
+      #9'  totalProduto decimal (18,5) default 0.00000,'
+      #9'  PRIMARY KEY (vendaId,produtoId),'
+      #9'  CONSTRAINT FK_VendasItensProdutos FOREIGN KEY (produtoId)'
+      #9#9'REFERENCES produtos(produtoId)'
+      #9')'
+      'END')
+    Left = 296
+    Top = 48
+  end
+  object QryScriptUsuarios: TFDQuery
+    Connection = ConexaoDB
+    SQL.Strings = (
+      'if object_ID ('#39'usuarios'#39') is null'
+      'begin'
+      #9'create table usuarios ('
+      #9'usuarioId int  identity(1,1) not null,'
+      #9'nome varchar(50) not null,'
+      #9'senha varchar(40) not null,'
+      ''
+      #9'primary key (usuarioId),'
+      #9')'
+      'end;')
+    Left = 200
+    Top = 184
+  end
+end

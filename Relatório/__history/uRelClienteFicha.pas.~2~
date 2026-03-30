@@ -1,0 +1,66 @@
+unit uRelClienteFicha;
+
+interface
+
+uses
+Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Datasnap.DBClient, RLReport, RLFilters, RLPDFFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelClienteFicha = class(TForm)
+    Relatorio: TRLReport;
+    RLBand1: TRLBand;
+    rlbRodaPe: TRLBand;
+    rlbTronco: TRLBand;
+    QryCliente: TFDQuery;
+    dtsCliente: TDataSource;
+    RLPDFFilter1: TRLPDFFilter;
+    RLXLSXFilter1: TRLXLSXFilter;
+    RLXLSFilter1: TRLXLSFilter;
+    RLDraw1: TRLDraw;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
+    RLLabel1: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLLabel2: TRLLabel;
+    QryClienteclienteId: TFDAutoIncField;
+    QryClienteNome: TStringField;
+    QryClienteemail: TStringField;
+    QryClientetelefone: TStringField;
+    RLDraw2: TRLDraw;
+    QryClientecep: TStringField;
+    QryClienteendereco: TStringField;
+    QryClientebairro: TStringField;
+    QryClientecidade: TStringField;
+    QryClienteestado: TStringField;
+    QryClientedataNascimento: TSQLTimeStampField;
+    RLLabel3: TRLLabel;
+    RLDBText1: TRLDBText;
+    RLLabel4: TRLLabel;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelClienteFicha: TfrmRelClienteFicha;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelClienteFicha.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  QryCliente.Close;
+end;
+
+procedure TfrmRelClienteFicha.FormCreate(Sender: TObject);
+begin
+  QryCliente.Open;
+end;
+end.

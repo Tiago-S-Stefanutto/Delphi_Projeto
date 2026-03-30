@@ -1,0 +1,80 @@
+inherited frmCadCategorias: TfrmCadCategorias
+  Caption = 'Cadastro de Categorias'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcPrincipal: TPageControl
+    inherited TabListagem: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 731
+      ExplicitHeight = 303
+      inherited grdListagem: TDBGrid
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'categoriasId'
+            Width = 82
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'descricao'
+            Visible = True
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 731
+      ExplicitHeight = 303
+      object edtDescricao: TLabeledEdit
+        Tag = 2
+        Left = 40
+        Top = 112
+        Width = 378
+        Height = 21
+        EditLabel.Width = 46
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Descri'#231#227'o'
+        MaxLength = 30
+        TabOrder = 0
+      end
+      object edtCategoriasId: TLabeledEdit
+        Tag = 1
+        Left = 40
+        Top = 56
+        Width = 121
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 1
+      end
+    end
+  end
+  inherited pnlRodaPe: TPanel
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'select categoriasId, descricao from categorias')
+    object F1QryListagemcategoriasId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'categoriasId'
+      Origin = 'categoriasId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object F2QryListagemdescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Size = 30
+    end
+  end
+end

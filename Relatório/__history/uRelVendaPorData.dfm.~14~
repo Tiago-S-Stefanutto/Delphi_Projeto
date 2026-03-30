@@ -1,0 +1,409 @@
+object frmRelVendaPorData: TfrmRelVendaPorData
+  Left = 0
+  Top = 0
+  Caption = 'frmRelVendaPorData'
+  ClientHeight = 426
+  ClientWidth = 793
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Relatorio: TRLReport
+    Left = 8
+    Top = 8
+    Width = 794
+    Height = 1123
+    DataSource = dtsVendaPorData
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    object RLBand1: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 40
+      BandType = btHeader
+      object RLLabel2: TRLLabel
+        Left = 0
+        Top = -1
+        Width = 227
+        Height = 19
+        Caption = 'Listagem de Venda por Data'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -17
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw2: TRLDraw
+        Left = 0
+        Top = 30
+        Width = 718
+        Height = 10
+        Align = faBottom
+        DrawKind = dkLine
+        Pen.Width = 3
+      end
+    end
+    object rlbRodaPe: TRLBand
+      Left = 38
+      Top = 218
+      Width = 718
+      Height = 40
+      BandType = btFooter
+      object RLDraw1: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 718
+        Height = 9
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 3
+      end
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 0
+        Top = 6
+        Width = 60
+        Height = 16
+        Info = itFullDate
+        Text = ''
+      end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 493
+        Top = 6
+        Width = 87
+        Height = 16
+        Alignment = taRightJustify
+        Info = itPageNumber
+        Text = ''
+      end
+      object RLLabel1: TRLLabel
+        Left = 586
+        Top = 6
+        Width = 16
+        Height = 16
+        Caption = ' / '
+      end
+      object RLSystemInfo3: TRLSystemInfo
+        Left = 608
+        Top = 6
+        Width = 112
+        Height = 16
+        Info = itLastPageNumber
+        Text = ''
+      end
+    end
+    object RLGroup1: TRLGroup
+      Left = 38
+      Top = 78
+      Width = 718
+      Height = 100
+      DataFields = 'clienteId'
+      object RLBand2: TRLBand
+        Left = 0
+        Top = 0
+        Width = 718
+        Height = 20
+        BandType = btHeader
+        Color = clMedGray
+        ParentColor = False
+        Transparent = False
+        object RLLabel3: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 37
+          Height = 16
+          Caption = 'Data:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText1: TRLDBText
+          Left = 69
+          Top = 0
+          Width = 84
+          Height = 16
+          DataField = 'dataVenda'
+          DataSource = dtsVendaPorData
+          Text = ''
+          Transparent = False
+        end
+      end
+      object RLBand3: TRLBand
+        Left = 0
+        Top = 20
+        Width = 718
+        Height = 20
+        BandType = btColumnHeader
+        object RLPanel1: TRLPanel
+          Left = 0
+          Top = 0
+          Width = 718
+          Height = 20
+          Align = faClient
+          Color = 13060775
+          ParentColor = False
+          Transparent = False
+          object RLLabel5: TRLLabel
+            Left = 3
+            Top = 1
+            Width = 53
+            Height = 16
+            Caption = 'C'#243'digo:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+          object RLLabel6: TRLLabel
+            Left = 76
+            Top = 1
+            Width = 114
+            Height = 16
+            Caption = 'Nome do Cliente:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+          object RLLabel8: TRLLabel
+            Left = 578
+            Top = 1
+            Width = 107
+            Height = 16
+            Caption = 'Valor da Venda:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+        end
+      end
+      object RLBand4: TRLBand
+        Left = 0
+        Top = 40
+        Width = 718
+        Height = 20
+        object RLDBText7: TRLDBText
+          Left = -1
+          Top = 3
+          Width = 52
+          Height = 16
+          DataField = 'clienteId'
+          DataSource = dtsVendaPorData
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText8: TRLDBText
+          Left = 76
+          Top = 1
+          Width = 8
+          Height = 16
+          DataField = ' '
+          DataSource = dtsVendaPorData
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText10: TRLDBText
+          Left = 597
+          Top = 4
+          Width = 66
+          Height = 16
+          DataField = 'totalVenda'
+          DataSource = dtsVendaPorData
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText2: TRLDBText
+          Left = 76
+          Top = 3
+          Width = 36
+          Height = 16
+          DataField = 'nome'
+          DataSource = dtsVendaPorData
+          Text = ''
+          Transparent = False
+        end
+      end
+      object RLBand5: TRLBand
+        Left = 0
+        Top = 60
+        Width = 718
+        Height = 40
+        BandType = btSummary
+        object RLDBResult1: TRLDBResult
+          Left = 597
+          Top = 6
+          Width = 105
+          Height = 16
+          DataField = 'totalVenda'
+          DataSource = dtsVendaPorData
+          Info = riSum
+          Text = ''
+        end
+        object RLDraw3: TRLDraw
+          Left = 376
+          Top = 0
+          Width = 342
+          Height = 9
+          DrawKind = dkLine
+        end
+        object RLLabel9: TRLLabel
+          Left = 395
+          Top = 6
+          Width = 91
+          Height = 16
+          Caption = 'Total Por Data:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDraw4: TRLDraw
+          Left = -1
+          Top = 31
+          Width = 722
+          Height = 9
+          DrawKind = dkLine
+          Pen.Style = psDashDot
+        end
+      end
+    end
+    object RLBand6: TRLBand
+      Left = 38
+      Top = 178
+      Width = 718
+      Height = 40
+      BandType = btColumnFooter
+      object RLLabel4: TRLLabel
+        Left = 395
+        Top = 6
+        Width = 71
+        Height = 16
+        Caption = 'Total Geral:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object RLDBResult2: TRLDBResult
+        Left = 597
+        Top = 6
+        Width = 105
+        Height = 16
+        DataField = 'totalVenda'
+        DataSource = dtsVendaPorData
+        Info = riSum
+        Text = ''
+      end
+    end
+  end
+  object QryVendaPorData: TFDQuery
+    Active = True
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'SELECT vendas.vendaId,'
+      '       vendas.clienteId,'
+      '       clientes.nome,'
+      '       vendas.dataVenda,'
+      'cast(vendas.totalVenda as numeric(18,3)) as totalVenda'
+      'FROM vendas'
+      'inner join clientes on clientes.clienteId = vendas.clienteId '
+      'where vendas.dataVenda between :DataInicio and :DataFim'
+      'order by vendas.dataVenda, vendas.clienteId')
+    Left = 367
+    Top = 16
+    ParamData = <
+      item
+        Name = 'DataInicio'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 46082d
+      end
+      item
+        Name = 'DataFim'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 46111d
+      end>
+    object QryVendaPorDatavendaId: TFDAutoIncField
+      FieldName = 'vendaId'
+      Origin = 'vendaId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object QryVendaPorDataclienteId: TIntegerField
+      FieldName = 'clienteId'
+      Origin = 'clienteId'
+      Required = True
+    end
+    object QryVendaPorDatanome: TStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 60
+    end
+    object QryVendaPorDatadataVenda: TSQLTimeStampField
+      FieldName = 'dataVenda'
+      Origin = 'dataVenda'
+    end
+    object QryVendaPorDatatotalVenda: TBCDField
+      FieldName = 'totalVenda'
+      Origin = 'totalVenda'
+      ReadOnly = True
+      DisplayFormat = '##,##0.00'#13#10
+      Precision = 18
+      Size = 3
+    end
+  end
+  object dtsVendaPorData: TDataSource
+    DataSet = QryVendaPorData
+    Left = 479
+    Top = 8
+  end
+  object RLPDFFilter1: TRLPDFFilter
+    DocumentInfo.Creator = 
+      'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
+      'ortes Inform'#225'tica'
+    DisplayName = 'Documento PDF'
+    Left = 527
+    Top = 8
+  end
+  object RLXLSXFilter1: TRLXLSXFilter
+    DisplayName = 'Planilha Excel'
+    Left = 575
+    Top = 8
+  end
+  object RLXLSFilter1: TRLXLSFilter
+    DisplayName = 'Planilha Excel 97-2013'
+    Left = 623
+    Top = 8
+  end
+end

@@ -1,0 +1,56 @@
+unit cUsuarioLogado;
+
+interface
+
+uses system.Classes, Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, System.SysUtils, FireDAC.Stan.Param, uLogin;
+
+type
+  TUsuarioLogado = class
+    private
+      F_UsuarioId:Integer;
+      F_nome:string;
+      F_senha:string;
+
+    public
+      class function TenhoAcesso (aUsuarioId: Integer; aChave: string; aConexao:TFDConnection): boolean; static;
+
+    published
+      property  codigo        :Integer  read F_UsuarioId  write F_UsuarioId;
+      property  nome          :string   read F_nome       write F_nome;
+      property  senha         :string   read F_senha      write F_senha;
+
+  end;
+
+implementation
+
+class function TUsuarioLogado.TenhoAcesso(aUsuarioId: Integer; aChave: string; aConexao: TFDConnection): boolean;
+var Qry:TFDQuery;
+begin
+  try
+    Result:=true;
+    Qry:=TFDQuery .Create(nil);
+    Qry.Connection:=aConexao;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT usuarioId '+
+                '  FROM usuariosAcaoAcesso '+
+                ' WHERE usuarioId=:usuarioId  '+
+                '   AND acaoAcessoId=(SELECT TOP 1 acaoAcessoId FROM acaoAcesso WHERE chave=:chave)'+
+                '   AND ativo=1');
+    Qry.ParamByName('usuarioId').AsInteger       :=aUsuarioId;
+    Qry.ParamByName('chave').AsString            :=aChave;
+
+    Qry.Open;
+
+    if Qry.IsEmpty then
+       Result:=false
+
+  finally
+    if Assigned(Qry) then
+       FreeAndNil(Qry);
+  end;
+
+end;
+
+end.

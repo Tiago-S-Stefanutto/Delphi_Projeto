@@ -1,0 +1,75 @@
+inherited frmConCategorias: TfrmConCategorias
+  Caption = 'Consulta de Categorias'
+  ClientHeight = 378
+  ClientWidth = 606
+  ExplicitWidth = 612
+  ExplicitHeight = 407
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pnlSuperior: TPanel
+    Width = 606
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitWidth = 454
+    inherited mskPesquisa: TMaskEdit
+      Width = 584
+      ExplicitLeft = 4
+      ExplicitWidth = 432
+    end
+  end
+  inherited pnlGrid: TPanel
+    Width = 606
+    Height = 296
+    ExplicitLeft = 0
+    ExplicitTop = 41
+    ExplicitWidth = 454
+    ExplicitHeight = 147
+    inherited grdPesquisa: TDBGrid
+      Width = 604
+      Height = 294
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'categoriasId'
+          Width = 113
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'descricao'
+          Width = 378
+          Visible = True
+        end>
+    end
+  end
+  inherited pnlInferior: TPanel
+    Top = 337
+    Width = 606
+    ExplicitLeft = 0
+    ExplicitTop = 188
+    ExplicitWidth = 454
+    inherited btnFechar: TBitBtn
+      Left = 521
+      ExplicitLeft = 369
+    end
+  end
+  inherited QryPesquisa: TFDQuery
+    SQL.Strings = (
+      'select categoriasId,'
+      'descricao'
+      'from categorias')
+    object QryPesquisacategoriasId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'categoriasId'
+      Origin = 'categoriasId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object QryPesquisadescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Size = 30
+    end
+  end
+end

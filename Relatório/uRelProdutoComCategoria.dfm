@@ -1,0 +1,436 @@
+object frmRelProdutoComCategoria: TfrmRelProdutoComCategoria
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio de Produtos por Categorias'
+  ClientHeight = 426
+  ClientWidth = 793
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Relatorio: TRLReport
+    Left = -1
+    Top = 8
+    Width = 794
+    Height = 1123
+    DataSource = dtsProdutoComCategoria
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    object RLBand1: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 40
+      BandType = btHeader
+      object RLLabel2: TRLLabel
+        Left = 0
+        Top = -1
+        Width = 291
+        Height = 19
+        Caption = 'Listagem de Produtos por Categoria'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -17
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object RLDraw2: TRLDraw
+        Left = 0
+        Top = 30
+        Width = 718
+        Height = 10
+        Align = faBottom
+        DrawKind = dkLine
+        Pen.Width = 3
+      end
+    end
+    object rlbRodaPe: TRLBand
+      Left = 38
+      Top = 238
+      Width = 718
+      Height = 40
+      BandType = btFooter
+      object RLDraw1: TRLDraw
+        Left = 0
+        Top = 0
+        Width = 718
+        Height = 9
+        Align = faTop
+        DrawKind = dkLine
+        Pen.Width = 3
+      end
+      object RLSystemInfo1: TRLSystemInfo
+        Left = 0
+        Top = 6
+        Width = 60
+        Height = 16
+        Info = itFullDate
+        Text = ''
+      end
+      object RLSystemInfo2: TRLSystemInfo
+        Left = 493
+        Top = 6
+        Width = 87
+        Height = 16
+        Alignment = taRightJustify
+        Info = itPageNumber
+        Text = ''
+      end
+      object RLLabel1: TRLLabel
+        Left = 586
+        Top = 6
+        Width = 16
+        Height = 16
+        Caption = ' / '
+      end
+      object RLSystemInfo3: TRLSystemInfo
+        Left = 608
+        Top = 6
+        Width = 112
+        Height = 16
+        Info = itLastPageNumber
+        Text = ''
+      end
+    end
+    object RLGroup1: TRLGroup
+      Left = 38
+      Top = 78
+      Width = 718
+      Height = 160
+      DataFields = 'categoriaId'
+      object RLBand2: TRLBand
+        Left = 0
+        Top = 0
+        Width = 718
+        Height = 20
+        BandType = btHeader
+        Color = clMedGray
+        ParentColor = False
+        Transparent = False
+        object RLLabel3: TRLLabel
+          Left = 0
+          Top = 0
+          Width = 70
+          Height = 16
+          Caption = 'Categoria:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBText1: TRLDBText
+          Left = 69
+          Top = 0
+          Width = 67
+          Height = 16
+          DataField = 'categoriaId'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText2: TRLDBText
+          Left = 164
+          Top = 0
+          Width = 117
+          Height = 16
+          DataField = 'DescricaoCategoria'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+        object RLLabel4: TRLLabel
+          Left = 142
+          Top = 0
+          Width = 16
+          Height = 16
+          Caption = ' - '
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = False
+        end
+      end
+      object RLBand3: TRLBand
+        Left = 0
+        Top = 20
+        Width = 718
+        Height = 20
+        BandType = btColumnHeader
+        object RLPanel1: TRLPanel
+          Left = 0
+          Top = 0
+          Width = 718
+          Height = 20
+          Align = faClient
+          Color = 13060775
+          ParentColor = False
+          Transparent = False
+          object RLLabel5: TRLLabel
+            Left = 3
+            Top = 1
+            Width = 53
+            Height = 16
+            Caption = 'C'#243'digo:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+          object RLLabel6: TRLLabel
+            Left = 76
+            Top = 1
+            Width = 119
+            Height = 16
+            Caption = 'Nome do Produto:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+          object RLLabel7: TRLLabel
+            Left = 446
+            Top = 1
+            Width = 156
+            Height = 16
+            Caption = 'Quantidade de Estoque:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+          object RLLabel8: TRLLabel
+            Left = 621
+            Top = 1
+            Width = 42
+            Height = 16
+            Caption = 'Valor:'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -13
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
+            ParentFont = False
+            Transparent = False
+          end
+        end
+      end
+      object RLBand4: TRLBand
+        Left = 0
+        Top = 40
+        Width = 718
+        Height = 20
+        object RLDBText7: TRLDBText
+          Left = -1
+          Top = 3
+          Width = 57
+          Height = 16
+          DataField = 'produtoId'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText8: TRLDBText
+          Left = 76
+          Top = 1
+          Width = 38
+          Height = 16
+          DataField = 'Nome'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText9: TRLDBText
+          Left = 532
+          Top = 3
+          Width = 70
+          Height = 16
+          DataField = 'Quantidade'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+        object RLDBText10: TRLDBText
+          Left = 629
+          Top = 3
+          Width = 34
+          Height = 16
+          DataField = 'Valor'
+          DataSource = dtsProdutoComCategoria
+          Text = ''
+          Transparent = False
+        end
+      end
+      object RLBand5: TRLBand
+        Left = 0
+        Top = 60
+        Width = 718
+        Height = 60
+        BandType = btSummary
+        object RLDBResult1: TRLDBResult
+          Left = 629
+          Top = 5
+          Width = 36
+          Height = 16
+          DataField = 'Quantidade'
+          DataSource = dtsProdutoComCategoria
+          Info = riSum
+          Text = ''
+        end
+        object RLDraw3: TRLDraw
+          Left = 376
+          Top = 0
+          Width = 342
+          Height = 9
+          DrawKind = dkLine
+        end
+        object RLLabel9: TRLLabel
+          Left = 395
+          Top = 5
+          Width = 207
+          Height = 16
+          Caption = 'Quantidade Estoque por Categoria:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+        end
+        object RLLabel10: TRLLabel
+          Left = 426
+          Top = 27
+          Width = 176
+          Height = 16
+          Caption = 'M'#233'dia de Valor por Categoria:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+          Transparent = False
+        end
+        object RLDBResult2: TRLDBResult
+          Left = 629
+          Top = 27
+          Width = 92
+          Height = 16
+          DataField = 'Valor'
+          DataSource = dtsProdutoComCategoria
+          Info = riAverage
+          Text = ''
+        end
+      end
+    end
+  end
+  object QryProdutoComCategoria: TFDQuery
+    Active = True
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'select produtos.produtoId,'
+      'produtos.Nome,'
+      'produtos.Descricao,'
+      'cast(produtos.Valor as numeric(18,3)) as Valor ,'
+      'cast(produtos.Quantidade as numeric(18,3)) as Quantidade ,'
+      'produtos.categoriaId,'
+      'categorias.descricao as DescricaoCategoria'
+      'from produtos'
+      
+        'left join categorias on categorias.categoriasId = produtos.Categ' +
+        'oriaId'
+      'order by produtos.categoriaId, produtos.produtoId')
+    Left = 423
+    Top = 8
+    object QryProdutoComCategoriaprodutoId: TFDAutoIncField
+      FieldName = 'produtoId'
+      Origin = 'produtoId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object QryProdutoComCategoriaNome: TStringField
+      FieldName = 'Nome'
+      Origin = 'Nome'
+      Size = 60
+    end
+    object QryProdutoComCategoriaDescricao: TStringField
+      FieldName = 'Descricao'
+      Origin = 'Descricao'
+      Size = 255
+    end
+    object QryProdutoComCategoriacategoriaId: TIntegerField
+      FieldName = 'categoriaId'
+      Origin = 'categoriaId'
+    end
+    object QryProdutoComCategoriaDescricaoCategoria: TStringField
+      FieldName = 'DescricaoCategoria'
+      Origin = 'DescricaoCategoria'
+      Size = 30
+    end
+    object QryProdutoComCategoriaQuantidade: TBCDField
+      FieldName = 'Quantidade'
+      Origin = 'Quantidade'
+      ReadOnly = True
+      DisplayFormat = '##,##0.000'
+      Precision = 18
+      Size = 3
+    end
+    object QryProdutoComCategoriaValor: TBCDField
+      FieldName = 'Valor'
+      Origin = 'Valor'
+      ReadOnly = True
+      DisplayFormat = '##,##0.000'
+      Precision = 18
+      Size = 3
+    end
+  end
+  object dtsProdutoComCategoria: TDataSource
+    DataSet = QryProdutoComCategoria
+    Left = 479
+    Top = 8
+  end
+  object RLPDFFilter1: TRLPDFFilter
+    DocumentInfo.Creator = 
+      'FortesReport Community Edition v4.0 \251 Copyright '#169' 1999-2016 F' +
+      'ortes Inform'#225'tica'
+    DisplayName = 'Documento PDF'
+    Left = 527
+    Top = 8
+  end
+  object RLXLSXFilter1: TRLXLSXFilter
+    DisplayName = 'Planilha Excel'
+    Left = 575
+    Top = 8
+  end
+  object RLXLSFilter1: TRLXLSFilter
+    DisplayName = 'Planilha Excel 97-2013'
+    Left = 623
+    Top = 8
+  end
+end

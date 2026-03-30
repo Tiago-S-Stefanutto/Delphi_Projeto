@@ -1,0 +1,67 @@
+object dtmGrafico: TdtmGrafico
+  OldCreateOrder = False
+  Height = 447
+  Width = 864
+  object dtsProdutoEstoque: TDataSource
+    DataSet = QryProdutoEstoque
+    Left = 160
+    Top = 24
+  end
+  object QryProdutoEstoque: TFDQuery
+    Active = True
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      
+        'SELECT CONVERT(VARCHAR, produtoId) +'#39' - '#39'+nome AS Label, Quantid' +
+        'ade AS Value FROM produtos')
+    Left = 24
+    Top = 24
+    object QryProdutoEstoqueLabel: TStringField
+      FieldName = 'Label'
+      Origin = 'Label'
+      ReadOnly = True
+      Size = 93
+    end
+    object QryProdutoEstoqueValue: TFMTBCDField
+      FieldName = 'Value'
+      Origin = 'Value'
+      Precision = 18
+      Size = 5
+    end
+  end
+  object QryValorVendaPorCliente: TFDQuery
+    Active = True
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      
+        'SELECT CONVERT(VARCHAR, vendas.clienteId) +'#39' - '#39'+ clientes.nome ' +
+        'AS Label,'
+      'SUM(vendas.totalVenda) AS Value'
+      'FROM Vendas'
+      'INNER JOIN clientes on clientes.clienteId = vendas.clienteId'
+      
+        'WHERE vendas.dataVenda BETWEEN CONVERT(DATE, GETDATE()-7) AND CO' +
+        'NVERT(DATE, GETDATE())'
+      'GROUP BY Vendas.clienteId, clientes.Nome')
+    Left = 552
+    Top = 24
+    object QryValorVendaPorClienteLabel: TStringField
+      FieldName = 'Label'
+      Origin = 'Label'
+      ReadOnly = True
+      Size = 93
+    end
+    object QryValorVendaPorClientevalue: TFMTBCDField
+      FieldName = 'value'
+      Origin = 'value'
+      ReadOnly = True
+      Precision = 38
+      Size = 5
+    end
+  end
+  object dtsValorVendaPorCliente: TDataSource
+    DataSet = QryValorVendaPorCliente
+    Left = 648
+    Top = 25
+  end
+end

@@ -1,0 +1,104 @@
+unit uUsuarioVsAcoes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, uDTMConexao, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async,
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TfrmUsuarioVsAcoes = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Splitter1: TSplitter;
+    grdUsuarios: TDBGrid;
+    grdAcoes: TDBGrid;
+    dtsUsuarios: TDataSource;
+    dtsAcoes: TDataSource;
+    QryUsuarios: TFDQuery;
+    QryAcoes: TFDQuery;
+    QryUsuariosusuarioId: TFDAutoIncField;
+    QryUsuariosnome: TStringField;
+    QryAcoesusuarioId: TIntegerField;
+    QryAcoesacaoAcessoId: TIntegerField;
+    QryAcoesdescricao: TStringField;
+    QryAcoesativo: TBooleanField;
+    btnFechar: TBitBtn;
+    procedure btnFecharClick(Sender: TObject);
+    procedure QryUsuariosAfterScroll(DataSet: TDataSet);
+    procedure FormShow(Sender: TObject);
+    procedure grdAcoesDblClick(Sender: TObject);
+  private
+    { Private declarations }
+    procedure SelecionarAcoesAcessoPorUsuario;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmUsuarioVsAcoes: TfrmUsuarioVsAcoes;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmUsuarioVsAcoes.btnFecharClick(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TfrmUsuarioVsAcoes.grdAcoesDblClick(Sender: TObject);
+var Qry:TFDQuery;
+begin
+  try
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection :=dtmPrincipal.ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('UPDATE usuariosAcaoAcesso '+
+                '   SET ativo=:ativo '+
+                ' WHERE usuarioId=:usuarioId '+
+                '  AND acaoAcessoId=:acaoAcessoId ');
+    Qry.ParamByName('usuarioId').AsInteger  :=QryAcoes.FieldByName('usuarioId').AsInteger;
+    Qry.ParamByName('acaoAcessoId').AsInteger  :=QryAcoes.FieldByName('acaoAcessoId').AsInteger;
+    Qry.ParamByName('ativo').AsBoolean  :=not QryAcoes.FieldByName('ativo').AsBoolean;
+    try
+      dtmPrincipal.ConexaoDB.StartTransaction;
+      Qry.ExecSQL;
+      dtmPrincipal.ConexaoDB.Commit;
+    finally
+      dtmPrincipal.ConexaoDB.Rollback;
+    end;
+  finally
+    SelecionarAcoesAcessoPorUsuario;
+    if Assigned(Qry) then
+      FreeAndNil(Qry);
+  end;
+end;
+
+procedure TfrmUsuarioVsAcoes.FormShow(Sender: TObject);
+begin
+  try
+    QryUsuarios.DisableControls;
+    QryUsuarios.Open;
+    SelecionarAcoesAcessoPorUsuario;
+  finally
+    QryUsuarios.EnableControls;
+  end;
+end;
+
+procedure TfrmUsuarioVsAcoes.QryUsuariosAfterScroll(DataSet: TDataSet);
+begin
+  SelecionarAcoesAcessoPorUsuario;
+end;
+
+procedure TfrmUsuarioVsAcoes.SelecionarAcoesAcessoPorUsuario;
+begin
+  QryAcoes.Close;
+  QryAcoes.ParamByName('usuarioId').AsInteger := QryUsuarios.FieldByName('usuarioId').AsInteger;
+  QryAcoes.Open;
+end;
+
+end.

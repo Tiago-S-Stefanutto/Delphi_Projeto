@@ -1,0 +1,57 @@
+unit uSelecionarData;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, System.UITypes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask, RxToolEdit, System.DateUtils, uTelaHeranca, uDTMConexao;
+
+type
+  TfrmSelecionarData = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    edtDataFinal: TDateEdit;
+    BitBtn1: TBitBtn;
+    edtDataInicio: TDateEdit;
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmSelecionarData: TfrmSelecionarData;
+
+implementation
+
+
+{$R *.dfm}
+
+
+
+procedure TfrmSelecionarData.BitBtn1Click(Sender: TObject);
+begin
+      if (edtDataFinal.Date) < (edtDataInicio.Date) then begin
+        MessageDlg('Data Final não pode ser maior que a data inicio', mtInformation,[mbOK],0);
+        edtDataFinal.SetFocus;
+        Abort;
+      end;
+
+      if (edtDataFinal.Date=0) or (edtDataInicio.Date=0) then begin
+        MessageDlg('Data inicial ou Final são campos obrigatórios', mtInformation,[mbOK],0);
+        edtDataInicio.SetFocus;
+        Abort;
+      end;
+
+      Close;
+end;
+
+procedure TfrmSelecionarData.FormShow(Sender: TObject);
+begin
+  edtDataInicio.Date := StartOfTheMonth(Date);
+  edtDataFinal.Date  := EndOfTheMonth(Date);
+end;
+
+end.

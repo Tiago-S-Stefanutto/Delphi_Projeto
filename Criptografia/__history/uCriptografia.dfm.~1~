@@ -1,0 +1,38 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 94
+  ClientWidth = 273
+  Color = 13224340
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object edtCriptografia: TEdit
+    Left = 8
+    Top = 16
+    Width = 121
+    Height = 21
+    TabOrder = 0
+  end
+  object edtDesCriptografia: TEdit
+    Left = 8
+    Top = 43
+    Width = 121
+    Height = 21
+    TabOrder = 1
+  end
+  object btnCrip: TButton
+    Left = 190
+    Top = 27
+    Width = 75
+    Height = 25
+    Caption = 'Executar'
+    TabOrder = 2
+  end
+end

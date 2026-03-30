@@ -1,0 +1,75 @@
+unit uRelVendaPorData;
+
+interface
+
+uses
+Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uDTMConexao, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Datasnap.DBClient, RLReport, RLFilters, RLPDFFilter, RLXLSFilter, RLXLSXFilter;
+
+type
+  TfrmRelVendaPorData = class(TForm)
+    Relatorio: TRLReport;
+    RLBand1: TRLBand;
+    rlbRodaPe: TRLBand;
+    QryVendaPorData: TFDQuery;
+    dtsVendaPorData: TDataSource;
+    RLPDFFilter1: TRLPDFFilter;
+    RLXLSXFilter1: TRLXLSXFilter;
+    RLXLSFilter1: TRLXLSFilter;
+    RLDraw1: TRLDraw;
+    RLSystemInfo1: TRLSystemInfo;
+    RLSystemInfo2: TRLSystemInfo;
+    RLLabel1: TRLLabel;
+    RLSystemInfo3: TRLSystemInfo;
+    RLLabel2: TRLLabel;
+    RLDraw2: TRLDraw;
+    RLGroup1: TRLGroup;
+    RLBand2: TRLBand;
+    RLBand3: TRLBand;
+    RLPanel1: TRLPanel;
+    RLLabel3: TRLLabel;
+    RLDBText1: TRLDBText;
+    RLLabel5: TRLLabel;
+    RLLabel6: TRLLabel;
+    RLLabel8: TRLLabel;
+    RLBand4: TRLBand;
+    RLDBText7: TRLDBText;
+    RLDBText8: TRLDBText;
+    RLDBText10: TRLDBText;
+    RLBand5: TRLBand;
+    RLDBResult1: TRLDBResult;
+    RLDraw3: TRLDraw;
+    RLLabel9: TRLLabel;
+    QryVendaPorDatavendaId: TFDAutoIncField;
+    QryVendaPorDataclienteId: TIntegerField;
+    QryVendaPorDatanome: TStringField;
+    QryVendaPorDatadataVenda: TSQLTimeStampField;
+    RLDBText2: TRLDBText;
+    RLBand6: TRLBand;
+    RLLabel4: TRLLabel;
+    RLDBResult2: TRLDBResult;
+    QryVendaPorDatatotalVenda: TBCDField;
+    RLDraw4: TRLDraw;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelVendaPorData: TfrmRelVendaPorData;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelVendaPorData.FormDestroy(Sender: TObject);
+begin
+   QryVenda.Close;
+end;
+
+end.

@@ -1,0 +1,31 @@
+unit uDtmGrafico;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
+  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
+
+type
+  TdtmGrafico = class(TDataModule)
+    dtsProdutoEstoque: TDataSource;
+    QryProdutoEstoque: TFDQuery;
+    QryProdutoEstoqueLabel: TStringField;
+    QryProdutoEstoqueValue: TFMTBCDField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dtmGrafico: TdtmGrafico;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

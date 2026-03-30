@@ -1,0 +1,169 @@
+unit cCadCategoria;
+
+interface
+
+uses System.Classes, Vcl.Controls, Vcl.ExtCtrls, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf,
+  FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef, FireDAC.VCLUI.Wait, Data.DB, FireDAC.Comp.Client, System.SysUtils, FireDAC.Stan.Param;
+
+type
+ TCategoria = class
+   private
+
+   ConexaoDB:TFDconnection;
+   F_categoriasId:Integer; // int
+   F_descricao:string;
+    function getCodico: Integer;
+    function getDescricao: string;
+    procedure setCodigo(const Value: Integer);
+    procedure setDescricao(const Value: string);     // varchar
+
+   public
+    constructor  Create(aConexao:TFDconnection);
+    destructor Destroy; override;
+
+    function Inserir:Boolean;
+    function Atualizar:Boolean;
+    function Apagar:Boolean;
+    function Selecionar(id:Integer):Boolean;
+
+   published
+    property codigo:Integer  read getCodico write setCodigo;
+    property descricao:string read getDescricao write setDescricao;
+end;
+
+implementation
+{ TCategoria }
+
+{$REGION 'Constructor and Destructor'}
+constructor TCategoria.Create(aConexao: TFDConnection);
+begin
+  ConexaoDB := aConexao;
+end;
+
+destructor TCategoria.Destroy;
+begin
+
+  inherited;
+end;
+
+{$ENDREGION}
+
+{$REGION 'CRUD'}
+function TCategoria.Apagar: Boolean;
+begin
+Result:=True;
+end;
+
+function TCategoria.Atualizar: Boolean;
+var Qry : TFDQuery;
+begin
+  try
+    Result  := True ;
+    Qry := TFDQuery .Create(nil);
+    Qry .Connection := ConexaoDB;
+    Qry .SQL  .Clear;
+    Qry .SQL  .Add('UPDATE categorias' +
+                   '  SET descricao=:descricao'+
+                   ' WHERE categoriasId=:categoriasId ');
+    Qry .ParamByName('categoriasId').AsInteger  :=Self.F_categoriasId;
+    Qry .ParamByName('descricao').AsString  :=Self.F_descricao;
+
+    try
+      Qry.ExecSQL;
+    except
+      on E: Exception do
+      begin
+        ShowMessage(E.Message);
+        Result := False;
+      end;
+
+    end;
+  finally
+    if Assigned (Qry) then
+    FreeAndNil(Qry);
+  end;
+end;
+
+function TCategoria.Inserir: Boolean;
+var Qry: TFDQuery;
+begin
+  try
+    Result:=True;
+    Qry:=TFDQuery.Create(nil);
+    Qry.Connection:= ConexaoDB;
+    Qry.SQL.Clear;
+    Qry.SQL.Add('INSERT INTO categorias (descricao) values (:descricao)');
+    Qry.ParamByName('descricao').AsString:=Self.F_descricao;
+    try
+      Qry.ExecSQL;
+    except
+      on E: Exception do
+      begin
+        ShowMessage(E.Message);
+        Result := False;
+      end;
+
+    end;
+  finally
+    if Assigned (Qry) then
+    FreeAndNil (Qry);
+  end;
+end;
+
+function TCategoria.Selecionar(id: Integer): Boolean;
+var Qry: TFDQuery;
+begin
+  try
+    Result := True;
+    Qry := TFDQuery.Create(nil);
+    Qry.Connection := ConexaoDB;
+
+    Qry.SQL.Clear;
+    Qry.SQL.Add('SELECT categoriasId, descricao');
+    Qry.SQL.Add('FROM categorias');
+    Qry.SQL.Add('WHERE categoriasId = :categoriasId');
+
+    Qry.ParamByName('categoriasId').AsInteger := id;
+
+    Qry.Open;
+
+    Self.F_categoriasId := Qry.FieldByName('categoriasId').AsInteger;
+    Self.F_descricao := Qry.FieldByName('descricao').AsString;
+
+  except
+    Result := False;
+  end;
+
+  Qry.Free;
+end;
+
+
+{$ENDREGION}
+
+{$REGION 'Gets'}
+
+function TCategoria.getCodico: Integer;
+begin
+  Result  := Self.F_categoriasId;
+end;
+
+function TCategoria.getDescricao: string;
+begin
+  Result  := Self.F_descricao;
+end;
+{$ENDREGION}
+
+{$REGION 'Sets'}
+procedure TCategoria.setCodigo(const Value: Integer);
+begin
+  Self.F_categoriasId:= Value;
+end;
+
+procedure TCategoria.setDescricao(const Value: string);
+begin
+  Self.F_descricao:= Value;
+end;
+{$ENDREGION}
+
+end.

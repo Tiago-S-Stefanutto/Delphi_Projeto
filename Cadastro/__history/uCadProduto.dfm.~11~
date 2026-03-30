@@ -1,0 +1,221 @@
+inherited frmCadProduto: TfrmCadProduto
+  Caption = 'Cadastro de Produtos'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcPrincipal: TPageControl
+    ActivePage = tabManutencao
+    inherited TabListagem: TTabSheet
+      inherited grdListagem: TDBGrid
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'produtoId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'nome'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'descricao'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'valor'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'quantidade'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'categoriaId'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'descricaocategoria'
+            Visible = True
+          end>
+      end
+    end
+    inherited tabManutencao: TTabSheet
+      object lblDescricao: TLabel
+        Left = 16
+        Top = 88
+        Width = 46
+        Height = 13
+        Caption = 'Descri'#231#227'o'
+      end
+      object lblValor: TLabel
+        Left = 16
+        Top = 253
+        Width = 24
+        Height = 13
+        Caption = 'Valor'
+      end
+      object lblQuantidade: TLabel
+        Left = 178
+        Top = 253
+        Width = 56
+        Height = 13
+        Caption = 'Quantidade'
+      end
+      object lblCategoria: TLabel
+        Left = 416
+        Top = 42
+        Width = 47
+        Height = 13
+        Caption = 'Categoria'
+      end
+      object edtProdutoId: TLabeledEdit
+        Tag = 1
+        Left = 16
+        Top = 24
+        Width = 121
+        Height = 21
+        EditLabel.Width = 33
+        EditLabel.Height = 13
+        EditLabel.Caption = 'C'#243'digo'
+        MaxLength = 10
+        NumbersOnly = True
+        TabOrder = 0
+      end
+      object edtNome: TLabeledEdit
+        Tag = 2
+        Left = 16
+        Top = 61
+        Width = 370
+        Height = 21
+        EditLabel.Width = 27
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Nome'
+        MaxLength = 60
+        TabOrder = 1
+      end
+      object edtDescricao: TMemo
+        Left = 16
+        Top = 107
+        Width = 677
+        Height = 89
+        TabOrder = 3
+      end
+      object edtValor: TCurrencyEdit
+        Left = 16
+        Top = 272
+        Width = 121
+        Height = 21
+        TabOrder = 4
+      end
+      object edtQuantidade: TCurrencyEdit
+        Left = 178
+        Top = 272
+        Width = 121
+        Height = 21
+        DisplayFormat = ',0.00;- ,0.00'
+        TabOrder = 5
+      end
+      object lkpCategoria: TDBLookupComboBox
+        Left = 416
+        Top = 61
+        Width = 145
+        Height = 21
+        KeyField = 'categoriasId'
+        ListField = 'descricao'
+        ListSource = dtsCategoria
+        TabOrder = 2
+      end
+    end
+  end
+  inherited pnlRodaPe: TPanel
+    inherited btnNavigator: TDBNavigator
+      Hints.Strings = ()
+    end
+  end
+  inherited QryListagem: TFDQuery
+    SQL.Strings = (
+      'select p.produtoId,'
+      '  p.nome,'
+      '  p.descricao,'
+      '  p.valor,'
+      '  p.quantidade,'
+      '  p.categoriaId,'
+      '  c.descricao as descricaocategoria'
+      'from produtos as p'
+      'left join categorias as c on c.categoriasId = p.categoriaId')
+    object F1QryListagemprodutoId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'produtoId'
+      Origin = 'p'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object F2QryListagemnome: TStringField
+      DisplayLabel = 'Nome'
+      FieldName = 'nome'
+      Origin = 'p'
+      Size = 60
+    end
+    object F2QryListagemdescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Origin = 'p'
+      Size = 255
+    end
+    object f1QryListagemvalor: TFMTBCDField
+      DisplayLabel = 'Valor'
+      FieldName = 'valor'
+      Origin = 'p'
+      Precision = 18
+      Size = 5
+    end
+    object f1QryListagemquantidade: TFMTBCDField
+      DisplayLabel = 'Quantidade'
+      FieldName = 'quantidade'
+      Origin = 'p'
+      Precision = 18
+      Size = 5
+    end
+    object f2QryListagemcategoriaId: TIntegerField
+      DisplayLabel = 'C'#243'd.Categoria'
+      FieldName = 'categoriaId'
+      Origin = 'p'
+    end
+    object F2QryListagemdescricaocategoria: TStringField
+      DisplayLabel = 'Descri'#231#227'o de Categoria'
+      FieldName = 'descricaocategoria'
+      Origin = 'c.descricao'
+      Size = 30
+    end
+  end
+  object QryCategoria: TFDQuery
+    Connection = dtmPrincipal.ConexaoDB
+    SQL.Strings = (
+      'select categoriasId, descricao from categorias')
+    Left = 452
+    Top = 24
+    object F1QryCategoriacategoriasId: TFDAutoIncField
+      DisplayLabel = 'C'#243'digo'
+      FieldName = 'categoriasId'
+      Origin = 'categoriasId'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object F2QryCategoriadescricao: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Size = 30
+    end
+  end
+  object dtsCategoria: TDataSource
+    DataSet = QryCategoria
+    Left = 500
+    Top = 24
+  end
+end
