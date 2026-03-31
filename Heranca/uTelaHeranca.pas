@@ -72,12 +72,12 @@ uses uPrincipal;
 {$R *.dfm}
 
 //Procedimento de controle de tela
-{$REGION 'ObservaÁıes'}
-//Tag: 1 - Chave Prim·ria - pk
-//Tag: 2 - Campo ObrigatÛrios
+{$REGION 'Observa√ß√µes'}
+//Tag: 1 - Chave Prim√°ria - pk
+//Tag: 2 - Campo Obrigat√≥rios
  {$ENDREGION}
 
-{$REGION 'FunÁıes e Procedures'}
+{$REGION 'Fun√ß√µes e Procedures'}
 
 procedure TfrmTelaHeranca.ControlarBotoes(btnNovo, btnAlterar, btnCancelar, btnGravar, btnApagar:TBitBtn; btnNavigator:TDBNavigator; pgcPrincipal:TPageControl; Flag:Boolean);
 begin
@@ -123,7 +123,7 @@ begin
   for i := 0 to ComponentCount -1 do begin
     if (Components[i] is TLabeledEdit) then begin
         if ((TLabeledEdit(Components[i]).Tag = 2) and (TLabeledEdit(Components[i]).Text = EmptyStr)) then begin
-         MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption + ' È um campo obrigatÛrio',mtInformation,[mbOK],0);
+         MessageDlg(TLabeledEdit(Components[i]).EditLabel.Caption + ' √© um campo obrigat√≥rio',mtInformation,[mbOK],0);
          TLabeledEdit(Components[i]).SetFocus;
 
          Result := True;
@@ -160,7 +160,7 @@ end;
 
 {$ENDREGION}
 
-{$REGION 'MÈtodos Virtuais'}
+{$REGION 'M√©todos Virtuais'}
 function TfrmTelaHeranca.Apagar: Boolean;
 begin
   ShowMessage('Deletado');
@@ -183,7 +183,7 @@ begin
 
   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, self.Name+'_'+TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
   begin
-     MessageDlg('Usu·rio: '+oUsuarioLogado.nome +', n„o tem permiss„o de acesso',mtWarning,[mbOK],0);
+     MessageDlg('Usu√°rio: '+oUsuarioLogado.nome +', n√£o tem permiss√£o de acesso',mtWarning,[mbOK],0);
      Abort;
   end;
 
@@ -197,7 +197,7 @@ begin
 
   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, self.Name+'_'+TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
   begin
-     MessageDlg('Usu·rio: '+oUsuarioLogado.nome +', n„o tem permiss„o de acesso',mtWarning,[mbOK],0);
+     MessageDlg('Usu√°rio: '+oUsuarioLogado.nome +', n√£o tem permiss√£o de acesso',mtWarning,[mbOK],0);
      Abort;
   end;
 
@@ -210,7 +210,7 @@ begin
 
   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, self.Name+'_'+TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
   begin
-     MessageDlg('Usu·rio: '+oUsuarioLogado.nome +', n„o tem permiss„o de acesso',mtWarning,[mbOK],0);
+     MessageDlg('Usu√°rio: '+oUsuarioLogado.nome +', n√£o tem permiss√£o de acesso',mtWarning,[mbOK],0);
      Abort;
   end;
 
@@ -222,7 +222,7 @@ begin
       QryListagem.Refresh;
     end
     else  begin
-      MessageDlg('Erro na Exclus„o', mtError, [mbOK], 0);
+      MessageDlg('Erro na Exclus√£o', mtError, [mbOK], 0);
     end;
   finally
   EstadoDoCadastro:=ecNenhum;
@@ -247,7 +247,7 @@ begin
 
   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, self.Name+'_'+TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
   begin
-     MessageDlg('Usu·rio: '+oUsuarioLogado.nome +', n„o tem permiss„o de acesso',mtWarning,[mbOK],0);
+     MessageDlg('Usu√°rio: '+oUsuarioLogado.nome +', n√£o tem permiss√£o de acesso',mtWarning,[mbOK],0);
      Abort;
   end;
 
@@ -263,7 +263,7 @@ begin
      QryListagem.Refresh;
     end
     else begin
-     MessageDlg('Erro na gravaÁ„o', mtWarning, [mbOK],0)
+     MessageDlg('Erro na grava√ß√£o', mtWarning, [mbOK],0)
     end;
  finally
   end;
@@ -330,10 +330,12 @@ var
   CondicaoSQL: String;
   Valor: String;
 begin
-  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo, self.Name+'_'+TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
+  if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo,
+     Self.Name + '_' + TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
   begin
-     MessageDlg('Usu·rio: '+oUsuarioLogado.nome +', n„o tem permiss„o de acesso', mtWarning, [mbOK], 0);
-     Abort;
+    MessageDlg('Usu√°rio: ' + oUsuarioLogado.nome +
+      ', n√£o tem permiss√£o de acesso', mtWarning, [mbOK], 0);
+    Abort;
   end;
 
   Valor := Trim(mskPesquisar.Text);
@@ -341,58 +343,73 @@ begin
   if Valor = '' then
   begin
     QryListagem.Close;
-    QryListagem.SQL.Clear;
-    QryListagem.SQL.Add(SelectOriginal);
+    QryListagem.SQL.Text := SelectOriginal;
     QryListagem.Open;
-    Abort;
+    Exit;
   end;
 
-  for I := 0 to QryListagem.FieldCount-1 do
+  NomeCampo := '';
+  TipoCampo := ftUnknown;
+
+  for I := 0 to QryListagem.FieldCount - 1 do
   begin
-    if QryListagem.Fields[i].FieldName = IndiceAtual then
+    if SameText(QryListagem.Fields[I].FieldName, IndiceAtual) then
     begin
-      TipoCampo := QryListagem.Fields[i].DataType;
-
-      if QryListagem.Fields[i].Origin <> '' then
-      begin
-        if Pos('.', QryListagem.Fields[i].Origin) > 0 then
-          NomeCampo := QryListagem.Fields[i].Origin
-        else
-          NomeCampo := QryListagem.Fields[i].Origin + '.' + QryListagem.Fields[i].FieldName
-      end
-      else
-        NomeCampo := QryListagem.Fields[i].FieldName;
-
+      TipoCampo := QryListagem.Fields[I].DataType;
+      NomeCampo := QryListagem.Fields[I].FieldName;
       Break;
     end;
   end;
 
-  if Pos('where', LowerCase(SelectOriginal)) > 1 then
-    WhereOrAnd := ' and '
+  if NomeCampo = '' then Exit;
+
+  if Pos('where', LowerCase(SelectOriginal)) > 0 then
+    WhereOrAnd := ' AND '
   else
-    WhereOrAnd := ' where ';
-
-  if (TipoCampo in [ftInteger, ftSmallint]) and (not TryStrToInt(Valor, I)) then
-    Exit;
-
-  if (TipoCampo = ftString) or (TipoCampo = ftWideString) then
-    CondicaoSQL := WhereOrAnd+' '+ NomeCampo + ' LIKE '+QuotedStr('%'+Valor+'%')
-  else if (TipoCampo = ftInteger) or (TipoCampo = ftSmallint) then
-    CondicaoSQL := WhereOrAnd+' '+NomeCampo + '='+Valor
-  else if (TipoCampo = ftDate) or (TipoCampo = ftDateTime) then
-  begin
-  CondicaoSQL := WhereOrAnd + ' ' + NomeCampo + ' = :DATA';
-  end
-  else if (TipoCampo = ftFloat) or (TipoCampo = ftCurrency) then
-    CondicaoSQL := WhereOrAnd+' '+NomeCampo + '='+StringReplace(Valor,',','.',[rfReplaceAll]);
+    WhereOrAnd := ' WHERE ';
 
   QryListagem.Close;
   QryListagem.SQL.Clear;
   QryListagem.SQL.Add(SelectOriginal);
-  QryListagem.SQL.Add(CondicaoSQL);
+
+  case TipoCampo of
+    ftString, ftWideString:
+      begin
+        QryListagem.SQL.Add(WhereOrAnd + NomeCampo + ' LIKE :VALOR');
+        QryListagem.ParamByName('VALOR').AsString := '%' + Valor + '%';
+      end;
+
+    ftInteger, ftSmallint, ftAutoInc:
+      begin
+        Valor := Trim(Valor);
+
+        if not TryStrToInt(Valor, I) then
+        begin
+          MessageDlg('Digite um n√∫mero v√°lido', mtWarning, [mbOK], 0);
+          Exit;
+        end;
+
+        QryListagem.SQL.Add(WhereOrAnd + NomeCampo + ' = :VALOR');
+        QryListagem.ParamByName('VALOR').AsInteger := I;
+      end;
+
+    ftFloat, ftCurrency:
+      begin
+        Valor := StringReplace(Valor, ',', '.', [rfReplaceAll]);
+        QryListagem.SQL.Add(WhereOrAnd + NomeCampo + ' = :VALOR');
+        QryListagem.ParamByName('VALOR').AsFloat := StrToFloat(Valor);
+      end;
+
+    ftDate, ftDateTime:
+      begin
+        QryListagem.SQL.Add(WhereOrAnd + NomeCampo + ' = :VALOR');
+        QryListagem.ParamByName('VALOR').AsDateTime := StrToDate(Valor);
+      end;
+  end;
+
   QryListagem.Open;
 
-  mskPesquisar.Text := '';
+  mskPesquisar.Clear;
   mskPesquisar.SetFocus;
 end;
 
