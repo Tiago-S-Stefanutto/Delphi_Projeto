@@ -350,6 +350,7 @@ begin
 end;
 
 procedure TfrmProVenda.btnAdicionarItemClick(Sender: TObject);
+var EstoqueAtual: Double;
 begin
   inherited;
 
@@ -369,6 +370,16 @@ begin
     MessageDlg('Quantidade não pode ser Zero' ,mtInformation,[mbOK],0);
     edtQuantidade.SetFocus;
     Abort ;
+  end;
+
+  EstoqueAtual := dtmVenda.QryProdutos.FieldByName('quantidade').AsFloat;
+
+  if edtQuantidade.Value > EstoqueAtual then
+  begin
+    MessageDlg('Quantidade indisponível! O estoque atual desse produto é de apenas: '+
+    FloatToStr(EstoqueAtual), mtWarning, [mbOK], 0);
+    edtQuantidade.SetFocus;
+    Abort;
   end;
 
   if dtmVenda.cdsItensVenda.Locate('produtoId', lkpProduto.KeyValue, []) then begin
