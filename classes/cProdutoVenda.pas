@@ -274,36 +274,6 @@ begin
     conexaoDB.StartTransaction;
     Qry:=TFDQuery.Create(nil);
     Qry.Connection:= ConexaoDB;
-
-    //🔎 Onde está o problema
-
-    //O problema está aqui no método Inserir:
-
-    //Qry.ExecSQL;
-
-    //Qry.SQL.Clear;
-    //Qry.SQL.Add('select scope_identity() as ID');
-    //Qry.Open;
-
-    //IdVendaGerado:=Qry.FieldByName('ID').AsInteger;
-
-    //Isso nem sempre funciona corretamente no FireDAC.
-
-    //Dependendo da conexão ou driver, o scope_identity() pode retornar 0.
-
-    //Então:
-
-    //IdVendaGerado = 0
-
-    //Depois você passa isso aqui:
-
-    //InserirItens(cds, IdVendaGerado);
-
-    //E grava:
-
-    //vendaId = 0
-
-
     Qry.SQL.Clear;
     Qry.SQL.Add('insert into vendas (clienteId, dataVenda, totalVenda) '+
                 'output inserted.vendaId '+
