@@ -211,6 +211,7 @@ var CondicaoData: string;
     WhereOrAnd: String;
     CondicaoSQL: String;
     Valor: String;
+    FS: TFormatSettings;
 begin
   if not TUsuarioLogado.TenhoAcesso(oUsuarioLogado.codigo,
      self.Name + '_' + TBitBtn(Sender).Name, DtmPrincipal.ConexaoDB) then
@@ -227,6 +228,7 @@ begin
   CondicaoData := '';
   NomeCampo    := '';
   TipoCampo    := ftUnknown;
+
 
   if (Valor = '') and (not TemInicio) and (not TemFim) then
   begin
@@ -260,14 +262,26 @@ begin
 
     if NomeCampo <> '' then
     begin
-      if (TipoCampo = ftString) or (TipoCampo = ftWideString) then
-        CondicaoSQL := ' WHERE ' + NomeCampo + ' LIKE ' +
-                       QuotedStr('%' + Valor + '%')
-      else if (TipoCampo = ftInteger) or (TipoCampo = ftSmallint) then
-        CondicaoSQL := ' WHERE ' + NomeCampo + ' = ' + Valor
-      else if (TipoCampo = ftFloat) or (TipoCampo = ftCurrency) then
-        CondicaoSQL := ' WHERE ' + NomeCampo + ' = ' +
-                       StringReplace(Valor, ',', '.', [rfReplaceAll]);
+      case TipoCampo of
+        ftString, ftWideString:
+          CondicaoSQL := ' WHERE ' + NomeCampo + ' LIKE :VALOR';
+
+        ftInteger, ftSmallint, ftAutoInc:
+          begin
+            if not TryStrToInt(Valor, I) then
+            begin
+              MessageDlg('Digite um número válido', mtWarning, [mbOK], 0);
+              Exit;
+            end;
+            CondicaoSQL := ' WHERE ' + NomeCampo + ' = :VALOR';
+          end;
+
+        ftFloat, ftCurrency, ftFMTBcd, ftBCD:
+          CondicaoSQL := ' WHERE ' + NomeCampo + ' = :VALOR';
+
+        ftDate, ftDateTime:
+          CondicaoSQL := ' WHERE ' + NomeCampo + ' = :VALOR';
+      end;
     end;
   end;
 
@@ -287,12 +301,30 @@ begin
       CondicaoData := ' WHERE ' + CondicaoData;
   end;
 
-
   QryListagem.Close;
-  QryListagem.SQL.Clear;
-  QryListagem.SQL.Add(SelectOriginal);
-  QryListagem.SQL.Add(CondicaoSQL);
-  QryListagem.SQL.Add(CondicaoData);
+  QryListagem.SQL.Text := SelectOriginal + ' ' + CondicaoSQL + ' ' + CondicaoData;
+
+  if (Valor <> '') and (QryListagem.Params.FindParam('VALOR') <> nil) then
+  begin
+    case TipoCampo of
+      ftString, ftWideString:
+        QryListagem.ParamByName('VALOR').AsString := '%' + Valor + '%';
+
+      ftInteger, ftSmallint, ftAutoInc:
+        QryListagem.ParamByName('VALOR').AsInteger := I;
+
+      ftFloat, ftCurrency, ftFMTBcd, ftBCD:
+      begin
+        FS := TFormatSettings.Create;
+        FS.DecimalSeparator := ',';
+
+        QryListagem.ParamByName('VALOR').AsFloat :=StrToFloat(Valor, FS);
+      end;
+
+      ftDate, ftDateTime:
+        QryListagem.ParamByName('VALOR').AsDateTime := StrToDate(Valor);
+    end;
+  end;
 
   if TemInicio then
     QryListagem.ParamByName('dataInicio').AsDate := edtDataInicio.Date;
@@ -315,6 +347,8 @@ begin
 
   mskPesquisar.Text := '';
   mskPesquisar.SetFocus;
+  edtDataInicio.Clear;
+  edtDataFinal.Clear;
 end;
 
 procedure TfrmProVenda.btnPesquisarClientesClick(Sender: TObject);
