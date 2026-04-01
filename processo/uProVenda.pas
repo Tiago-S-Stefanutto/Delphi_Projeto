@@ -94,6 +94,15 @@ end;
 
 function  TfrmProVenda.Gravar(EstadoDoCadastro: TEstadoDoCadastro) : Boolean;
 begin
+  
+  if dtmVenda.cdsItensVenda.RecordCount = 0 then
+  begin
+    MessageDlg('A venda precisa de pelo menos um produto.', mtWarning, [mbOK], 0);
+    Result:= false;
+    lkpProduto.SetFocus;
+    Abort;
+  end;
+  
   if edtVendaId.Text<>EmptyStr then
     oVenda.VendaId:=StrToInt(edtVendaId.Text)
   else
